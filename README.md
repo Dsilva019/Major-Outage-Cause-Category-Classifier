@@ -2,7 +2,7 @@
 <i>This is a project for DSC 80 at UCSD. My exploratory data analysis on this dataset can be found <a href="https://dsilva019.github.io/EDA-of-Major-Outages/"> here</a>.</i>
 
 
-# Introduction
+# <u>Introduction</u>
 
 For this project using the outages data set I want to be able to predict the category cause that resulted in the major outage. Since I am trying to predict the category of the cause of the major outage, the type of problem I have is a classification problem. As a result, I will be predicting the category cause of future major outages using a Decision Tree Classifier (DTC). My response variable for my regression problem is the Category Cause. I will be accessing the quality of my model using the accuracy metric of the DTC to see how well my model predicts the category cause of an outage. To train my model I will be using a data set containing major outages reported by different states in the United States from January 2000-July 2016. This data set contains 1534 rows and 55 columns.
 
@@ -25,7 +25,7 @@ In my data cleaning process, I first looked at the raw data set to assess what s
 |   2012 |       6 | Minnesota    | MN            | MRO           | East North Central |            -0.1 | normal             | 2012-06-19 00:00:00 | 04:30:00            | 2012-06-20 00:00:00       | 23:00:00                  | severe weather     | thunderstorm            |               nan |              2550 |              nan |                68200 |       11.79 |        9.25 |        6.71 |          9.19 | 1.85152e+06 | 1.94117e+06 | 1.99303e+06 |   5.78706e+06 |      31.9941 |      33.5433 |      34.4393 |         2317336 |          278466 |           11010 |           2606813 |        88.8954 |        10.6822 |       0.422355 |              51598 |            48156 |          1.07148 |                 0.6 |           5364 |          277627 |       1.93209 |             2.2 |      5380443 |          73.27 |       15.28 |           2279 |      1700.5 |           18.2 |            2.14 |          0.6 |    91.5927 |         8.40733 |            5.47874 |
 |   2015 |       7 | Minnesota    | MN            | MRO           | East North Central |             1.2 | warm               | 2015-07-18 00:00:00 | 02:00:00            | 2015-07-19 00:00:00       | 07:00:00                  | severe weather     | nan                     |               nan |              1740 |              250 |               250000 |       13.07 |       10.16 |        7.74 |         10.43 | 2.02888e+06 | 2.16161e+06 | 1.77794e+06 |   5.97034e+06 |      33.9826 |      36.2059 |      29.7795 |         2374674 |          289044 |            9812 |           2673531 |        88.8216 |        10.8113 |       0.367005 |              54431 |            49844 |          1.09203 |                 1.7 |           4873 |          292023 |       1.6687  |             2.2 |      5489594 |          73.27 |       15.28 |           2279 |      1700.5 |           18.2 |            2.14 |          0.6 |    91.5927 |         8.40733 |            5.47874 |
 
-# Baseline Model
+# <u>Baseline Model</u>
 
 
 ### Features
@@ -56,7 +56,7 @@ To build my model I will be using a pipeline to preprocess the categorical featu
 
 My current baseline model has an accuracy of 0.605 on training data and a score of 0.536 on testing data. This tells me while my model can predict the outcome of training data not that well and on new never seen data my model performs even worse. This tells me the model is slightly overfitted with the training data and needs more features since it is only accurate 53.6% percent of the time when tested on new data.
 
-# Final model
+# <u>Final model</u>
 
 ### New Features
 
@@ -86,7 +86,7 @@ In conclusion, the final model I chose was a Decision tree Classifier. The featu
 
 As for the results, I saw significant improvement in both the training data and testing data accuracy. The accuracy of the training data was 0.7260869565217392 and for the testing data, it was 0.6328125. This tells me that the new features I included and engineered alongside the hyperparameters I fine-tuned were able to better optimize generalization performance. My model became more generalized allowing for better predictions of the category cause of major outages on unseen data. My last model was too specific as it only had access to two features that relate mostly to the severe weather causes but not the other causes.
 
-# Fairness analysis
+#<u> Fairness analysis</u>
 
 To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3. The test statistic I will be using will be the absolute difference in accuracy. I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis.
 
