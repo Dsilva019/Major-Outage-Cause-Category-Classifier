@@ -86,7 +86,7 @@ In conclusion, the final model I chose was a Decision tree Classifier. The featu
 
 As for the results, I saw significant improvement in both the training data and testing data accuracy. The accuracy of the training data was 0.7260869565217392 and for the testing data, it was 0.6328125. This tells me that the new features I included and engineered alongside the hyperparameters I fine-tuned were able to better optimize generalization performance. My model became more generalized allowing for better predictions of the category cause of major outages on both the training and unseen data. My last model was too specific as it only had access to two features that relate mostly to the severe weather causes but not the other causes.
 
-#<u> Fairness analysis</u>
+# <u> Fairness analysis</u>
 
 To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3.  will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis.
 
