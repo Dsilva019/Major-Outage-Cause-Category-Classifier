@@ -103,4 +103,6 @@ To access the fairness of my final model, I want to see whether my model is fair
 
 ### Summary of Results
 
+<iframe src="assets/emperical.html" width=800 height=600 frameBorder=0></iframe>
+
 Since the p-value is greater than the significance level, 0.47 > 0.05, we fail to reject the null hypothesis. There is not enough evidence to suggest that there is a difference in accuracy between low-population states and high-population states.
