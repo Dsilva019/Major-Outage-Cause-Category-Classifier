@@ -1,5 +1,5 @@
 # Major Outage Cause Category Classifier
-<i>This is a project for DSC 80 at UCSD. My exploratory data analysis on this dataset can be found <a href="https://dsilva019.github.io/EDA-of-Major-Outages/"> here</a>.</i>
+<small> <i>This is a project for DSC 80 at UCSD. My exploratory data analysis on this dataset can be found <a href="https://dsilva019.github.io/EDA-of-Major-Outages/"> here</a>.</i> </small>
 
 
 # <u>Introduction</u>
@@ -99,7 +99,8 @@ To access the fairness of my final model, I want to see whether my model is fair
 
 <b>Observed Absolute Difference in Accuracy: </b>0.03581703572005823
 
-### Set Up To begin my fairness analysis, I first need to create a new column that contains the Population Quantiles of the state that the major outages occurred in.
+### Set Up
+To begin my fairness analysis, I first need to create a new column that contains the Population Quantiles of the state that the major outages occurred in.
 
 ### Summary of Results
 
