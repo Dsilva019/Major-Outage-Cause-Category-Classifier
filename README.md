@@ -4,7 +4,7 @@
 
 # <u>Introduction</u>
 
-For this project using the outages data set I want to be able to predict the category cause that resulted in the major outage. Since I am trying to predict the category of the cause of the major outage, the type of problem I have is a classification problem. As a result, I will be predicting the category cause of future major outages using a Decision Tree Classifier (DTC). My response variable for my regression problem is the Category Cause. I will be accessing the quality of my model using the accuracy metric of the DTC to see how well my model predicts the category cause of an outage. To train my model I will be using a data set containing major outages reported by different states in the United States from January 2000-July 2016. This data set contains 1534 rows and 55 columns.
+For this project I want to be able to predict the category cause that results in major outages. Since I am trying to predict the category of the cause of the major outage, the type of problem I have is a classification problem. As a result, I will be predicting the category cause of future major outages using a Decision Tree Classifier (DTC). My response variable for my regression problem is the Category Cause. I will be accessing the quality of my model using the accuracy metric of the DTC to see how well my model predicts the category cause of an outage. To train my model I will be using a data set containing major outages reported by different states in the United States from January 2000-July 2016. This data set contains 1534 rows and 55 columns.
 
 
 
@@ -46,11 +46,10 @@ Since I will be building a Decision Tree Classifier, I will pick 2 features that
 
 #### Feature Engineering & Preprocessing
 
-My categorical features need to be engineered so that they can be used in my DTC model. Since all of my categorical features are nominal I will use one hot encode to engineer them from a categorical feature into a numerical feature so that my model can use it.
+My categorical features need to be engineered so that they can be used in my DTC model. Since all of my categorical features are nominal I will use one hot encode to transform them from a categorical feature into a numerical feature so that my model can use it.
 
 #### Baseline Pipeline
-
-To build my model I will be using a pipeline to preprocess the categorical features into numerical ones and then using all my features to train a decision tree classifier. I will also be splitting my data into two sections training and testing data. My model will be trained on purely the training data but I will access the accuracy of the model using both training and testing data to compare the two results.
+I will be splitting my data into two sections training and testing data. Where 0.75% of my data will be dedicated for training and 0.25% will be dedicated for testing. My model will be trained on purely the training data but I will access the accuracy of the model using both training and testing data to compare the two results. To build my model I will be using a pipeline to preprocess the categorical features into numerical to train a decision tree classifier.
 
 ### Summary of Results
 
@@ -60,15 +59,16 @@ My current baseline model has an accuracy of 0.605 on training data and a score 
 
 ### New Features
 
-As previously stated to improve my baseline model I needed more features that give more insight into what the category cause of the major outage was. I did some more exploratory data analysis and found that the second and third-highest counts of category causes of major outages were intentional attacks and system operability disruption. These category causes are more general than severe weather so I looked for more features that could reflect that. So the new features I chose were, 'CLIMATE.REGION', 'POPULATION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT'. For the features 'U.S._STATE', 'POPULATION', and 'AREAPCT_URBAN' since these features reflect the demographics of the people affected by the major outages I believe would help to explain the high number of major outages due to intentional attacks and system operability disruption. As for the features 'CLIMATE.REGION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT' since severe weather is still the most common reason why major outages occurred I believe this would also help to provide my model better information on the weather when to predict major outages occurred due to severe weather or not. Since it gives insight into whether the outage was due to a hurricane, the climate of the region where the major occurred, and the amount of water in the state where the major outage occurred these give more data about the weather conditions I hope it will allow my model to make better predictions with the extra information.
+As previously stated to improve my baseline model I needed more features that give more insight into what the category cause of the major outage was. I did some more exploratory data analysis and found that the second and third-highest counts of category causes of major outages were intentional attacks and system operability disruption. These category causes are more general than severe weather so I looked for more features that could reflect that. The new features I chose were, 'CLIMATE.REGION', 'POPULATION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT'. For the features 'U.S._STATE', 'POPULATION', and 'AREAPCT_URBAN' since these features reflect the demographics of the people affected by the major outages I believe it would better explain the high number of major outages due to intentional attacks and system operability disruption. As for the features 'CLIMATE.REGION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT' since severe weather is still the most common reason why major outages occurred I believe this would provide my model better information of the weather and land conditions so that it predict if major outages occurred due to severe weather or not more accurately.
 
 
 
-### New Preprocessing line
+### Preprocessing line Additions
 <ul>
-  <li>Custom Function Transformer that binarizes the Hurricane Names.</li>
-  <li>New Preprocessing Line that one hot encodes 'MONTH', 'U.S._STATE', 'NERC.REGION', and 'CLIMATE.REGION', and turns the Population into percentiles.</li>
-  <li> Leaves 'AREAPCT_URBAN', and 'PCT_WATER_TOT' as is since their values are in percentages that range from 0-99%</li>
+  <li> Custom Function Transformer that binarizes the 'HURRICANE.NAMES' column.</li>
+  <li> One hot encodes 'MONTH', 'U.S._STATE', 'NERC.REGION', and 'CLIMATE.REGION' columns.</li>
+  <li> Transforms the 'POPULATION' into quantiles.</li>
+  <li> Leaves 'AREAPCT_URBAN', and 'PCT_WATER_TOT' columns as is.</li>
 </ul>
 
 
@@ -81,14 +81,14 @@ To further improve my model I decided I want to fine-tune the hyper parameters o
 
 ### Final Model Breakdown
 
-In conclusion, the final model I chose was a Decision tree Classifier. The features I chose for my model were 'MONTH', 'U.S._STATE', 'NERC.REGION', 'CLIMATE.REGION', 'POPULATION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT'. Five of those features were nominal categorical features, while three of them were numerical features. I one hot-encoded four of the nominal categorical features to turn them into numerical ones. I binarized 'HURRICANE.NAMES' using a custom function transformer I made to transform its values into 1's and 0's. As for the numerical features I turned the 'POPULATION' values into quantiles and left 'AREAPCT_URBAN', and 'PCT_WATER_TOT' as is. As for the hyperparameters of the Decision Tree Classifier, I ended up choosing a max depth of 6 and a minimum sample split of 5. The way I did this was using a double for loop that would test every single combination of a max depth range of 1-200 and a minimum sample split range of 2-30. In each iteration, I fitted the model with training data and recorded its accuracy on the testing data. Then I chose the model with the greatest accuracy with the testing data.
+In conclusion, the final model I chose was a Decision tree Classifier. The features I chose for my model were 'MONTH', 'U.S._STATE', 'NERC.REGION', 'CLIMATE.REGION', 'POPULATION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT'. Five of those features were nominal categorical features, while three of them were numerical features. I one hot-encoded four of the nominal categorical features to turn them into numerical ones. I binarized 'HURRICANE.NAMES' using a custom function transformer I made to binarize its values. As for the numerical features I turned the 'POPULATION' feature into quantiles and left 'AREAPCT_URBAN', and 'PCT_WATER_TOT' as is. As for the hyperparameters of the Decision Tree Classifier, I ended up choosing a max depth of 36 and a minimum sample split of 5. The way I did this by manually iterating through every single combination of a max depth range of 1-200 and a minimum sample split range of 2-30. In each iteration, I fitted the model with training data and recorded its accuracy on the testing data. Then I chose the model with the greatest accuracy with the testing data.
 ### Results Breakdown
 
-As for the results, I saw significant improvement in both the training data and testing data accuracy. The accuracy of the training data was 0.7260869565217392 and for the testing data, it was 0.6328125. This tells me that the new features I included and engineered alongside the hyperparameters I fine-tuned were able to better optimize generalization performance. My model became more generalized allowing for better predictions of the category cause of major outages on unseen data. My last model was too specific as it only had access to two features that relate mostly to the severe weather causes but not the other causes.
+As for the results, I saw significant improvement in both the training data and testing data accuracy. The accuracy of the training data was 0.7260869565217392 and for the testing data, it was 0.6328125. This tells me that the new features I included and engineered alongside the hyperparameters I fine-tuned were able to better optimize generalization performance. My model became more generalized allowing for better predictions of the category cause of major outages on both the training and unseen data. My last model was too specific as it only had access to two features that relate mostly to the severe weather causes but not the other causes.
 
 #<u> Fairness analysis</u>
 
-To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3. The test statistic I will be using will be the absolute difference in accuracy. I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis.
+To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3.  will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis.
 
 
 ### Hypotheses:
@@ -105,4 +105,4 @@ To access the fairness of my final model, I want to see whether my model is fair
 
 <iframe src="assets/emperical.html" width=800 height=600 frameBorder=0></iframe>
 
-Since the p-value is greater than the significance level, 0.47 > 0.05, we fail to reject the null hypothesis. There is not enough evidence to suggest that there is a difference in accuracy between low-population states and high-population states.
+Since the p-value is greater than the significance level, 0.47 > 0.05, we fail to reject the null hypothesis. There is not enough evidence to suggest that there is a difference in accuracy between low and high population states.
