@@ -66,7 +66,7 @@ As previously stated to improve my baseline model I needed more features that gi
 
 ### New Preprocessing line
 <ul>
-  <li>Custom Function Transformer that binarizes the Hurricane Names./li>
+  <li>Custom Function Transformer that binarizes the Hurricane Names.</li>
   <li>New Preprocessing Line that one hot encodes 'MONTH', 'U.S._STATE', 'NERC.REGION', and 'CLIMATE.REGION', and turns the Population into percentiles.</li>
   <li> Leaves 'AREAPCT_URBAN', and 'PCT_WATER_TOT' as is since their values are in percentages that range from 0-99%</li>
 </ul>
