@@ -93,11 +93,11 @@ To access the fairness of my final model, I want to see whether my model is fair
 
 ### Hypotheses:
 
- <b>Null Hypothesis: </b>The classifier's accuracy is the same for both low population states and high population states, and any differences are due to chance.
+<b>Null Hypothesis: </b>The classifier's accuracy is the same for both low population states and high population states, and any differences are due to chance.
 
-  <b>Alternative Hypothesis: </b>There is a difference in accuracy for low population states and high population states
+<b>Alternative Hypothesis: </b>There is a difference in accuracy for low population states and high population states
 
-  <b>Observed Absolute Difference in Accuracy: </b>0.03581703572005823
+<b>Observed Absolute Difference in Accuracy: </b>0.03581703572005823
 
 ### Set Up To begin my fairness analysis, I first need to create a new column that contains the Population Quantiles of the state that the major outages occurred in.
 
