@@ -1,10 +1,10 @@
 # Major Outage Cause Category Classifier
-<small> <i>This is a project for DSC 80 at UCSD. My exploratory data analysis on this dataset can be found <a href="https://dsilva019.github.io/EDA-of-Major-Outages/"> here</a>.</i> </small>
+<small> <i>This is a project for DSC 80 at UCSD by Diego Silva (d1silva@ucsd.edu). My exploratory data analysis on this dataset can be found <a href="https://dsilva019.github.io/EDA-of-Major-Outages/"> here</a>.</i> </small>
 
 
 # <u>Introduction</u>
 
-For this project I want to be able to predict the category cause that results in major outages. Since I am trying to predict the category of the cause of the major outage, the type of problem I have is a classification problem. As a result, I will be predicting the category cause of future major outages using a Decision Tree Classifier (DTC). My response variable for my regression problem is the Category Cause. I will be accessing the quality of my model using the accuracy metric of the DTC to see how well my model predicts the category cause of an outage. To train my model I will be using a data set containing major outages reported by different states in the United States from January 2000-July 2016. This data set contains 1534 rows and 55 columns.
+For this project I will be using a data set containing major outages reported by different states in the United States from January 2000-July 2016. This data set contains 1534 rows and 55 columns. I want to be able to predict the category cause that results in a major outage. Since I am trying to predict the category of the cause of the major outage, the type of problem I have is a classification problem. As a result, I will be predicting the category cause of future major outages using a Decision Tree Classifier (DTC). My response variable for my regression problem is the Category Cause. I will be accessing the quality of my model using the accuracy metric of the DTC to see how well my model predicts the category cause of an outage. I chose accuracy as my evaluation metric because for this type of prediction problem, the True Positives and True Negatives are more important than knowing the False Positive and Negatives.
 
 
 
@@ -29,7 +29,7 @@ In my data cleaning process, I first looked at the raw data set to assess what s
 
 
 ### Features
-Since I will be building a Decision Tree Classifier, I will pick 2 features that I believe will be good variables to predict the number of affected in future major outages. The features I want to use to build my model are 'MONTH' and 'NERC.REGION'. I chose these features because after performing a quick exploratory data analysis, I noticed a significant amount of the cause category of major outages was due to severe weather. So I chose two variables that I believe reflect my findings. In my features, I have two nominal categorical features.
+Since I will be building a Decision Tree Classifier, I will pick 2 features that I believe will be good variables to predict the category cause of future major outages. The features I want to use to train my model are 'MONTH' and 'NERC.REGION'. I chose these features because after performing a quick exploratory data analysis, I noticed a significant amount of the cause category of major outages was due to severe weather. So I chose two variables that I believe reflect my findings. Since these features give insight to the time of the year and specific locations that the outages occurred in would provide useful information to decide weather outages occurred due to severe weather or not. In my features, I have two nominal categorical features.
 
 |   MONTH | NERC.REGION   |
 |--------:|:--------------|
@@ -46,10 +46,10 @@ Since I will be building a Decision Tree Classifier, I will pick 2 features that
 
 #### Feature Engineering & Preprocessing
 
-My categorical features need to be engineered so that they can be used in my DTC model. Since all of my categorical features are nominal I will use one hot encode to transform them from a categorical feature into a numerical feature so that my model can use it.
+My categorical features need to be transformed so that they can be used in my DTC model. Since all of my categorical features are nominal I will one hot encode them to transform them from a categorical feature into a numerical feature so that my model can use them.
 
 #### Baseline Pipeline
-I will be splitting my data into two sections training and testing data. Where 0.75% of my data will be dedicated for training and 0.25% will be dedicated for testing. My model will be trained on purely the training data but I will access the accuracy of the model using both training and testing data to compare the two results. To build my model I will be using a pipeline to preprocess the categorical features into numerical to train a decision tree classifier.
+I will be splitting my data into two sections training and testing data. Where 0.75% of my data will be dedicated for training and 0.25% will be dedicated for validation. My model will be trained on purely the training data but I will access the accuracy of the model using both training and testing data to compare the two results. To build my model I will be using a pipeline to preprocess the categorical features into numerical to train a decision tree classifier.
 
 ### Summary of Results
 
@@ -59,7 +59,7 @@ My current baseline model has an accuracy of 0.605 on training data and a score 
 
 ### New Features
 
-As previously stated to improve my baseline model I needed more features that give more insight into what the category cause of the major outage was. I did some more exploratory data analysis and found that the second and third-highest counts of category causes of major outages were intentional attacks and system operability disruption. These category causes are more general than severe weather so I looked for more features that could reflect that. The new features I chose were, 'CLIMATE.REGION', 'POPULATION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT'. For the features 'U.S._STATE', 'POPULATION', and 'AREAPCT_URBAN' since these features reflect the demographics of the people affected by the major outages I believe it would better explain the high number of major outages due to intentional attacks and system operability disruption. As for the features 'CLIMATE.REGION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT' since severe weather is still the most common reason why major outages occurred I believe this would provide my model better information of the weather and land conditions so that it predict if major outages occurred due to severe weather or not more accurately.
+As previously stated to improve my baseline model I needed more features that give more insight into what the category cause of the major outage was. I did some more exploratory data analysis and found that the second and third-highest counts of category causes of major outages were intentional attacks and system operability disruption. These category causes are more general than severe weather so I looked for more features that could reflect that. The new features I chose were, 'CLIMATE.REGION', 'POPULATION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT'. For the features 'U.S._STATE', 'POPULATION', and 'AREAPCT_URBAN' since these features reflect the demographics of the people affected by the major outages I believe it would better explain the high number of major outages due to intentional attacks and system operability disruption. As for the features 'CLIMATE.REGION', 'HURRICANE.NAMES', and 'PCT_WATER_TOT' since severe weather is still the most common reason why major outages occurred I believe this would provide my model better information of the weather and land conditions so that it predict if major outages occurred due to severe weather or not more accurately.
 
 
 
@@ -67,7 +67,7 @@ As previously stated to improve my baseline model I needed more features that gi
 <ul>
   <li> Custom Function Transformer that binarizes the 'HURRICANE.NAMES' column.</li>
   <li> One hot encodes 'MONTH', 'U.S._STATE', 'NERC.REGION', and 'CLIMATE.REGION' columns.</li>
-  <li> Transforms the 'POPULATION' into quantiles.</li>
+  <li> Transforms the 'POPULATION' column into quantiles.</li>
   <li> Leaves 'AREAPCT_URBAN', and 'PCT_WATER_TOT' columns as is.</li>
 </ul>
 
@@ -88,7 +88,7 @@ As for the results, I saw significant improvement in both the training data and 
 
 # <u> Fairness analysis</u>
 
-To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3.  will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis. Lastly, to conduct my fairness analysis I will use a permutation test to test my hypotheses.
+To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3. I will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis. Lastly, to conduct my fairness analysis I will use a permutation test to test my hypotheses.
 
 
 ### Hypotheses:
