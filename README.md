@@ -88,7 +88,7 @@ As for the results, I saw significant improvement in both the training data and 
 
 # <u> Fairness analysis</u>
 
-To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3.  will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis.
+To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3.  will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis. Lastly, to conduct my fairness analysis I will use a permutation test to test my hypotheses.
 
 
 ### Hypotheses:
@@ -100,9 +100,11 @@ To access the fairness of my final model, I want to see whether my model is fair
 <b>Observed Absolute Difference in Accuracy: </b>0.03581703572005823
 
 ### Set Up
-To begin my fairness analysis, I first need to create a new column that contains the Population Quantiles of the state that the major outages occurred in.
+To begin my fairness analysis, I first need to create a new column that contains the Population Quantiles of the state that the major outages occurred in. Once I had that, I then turned the column into a Boolean column, on the conditions if a row had a value of 3 or lower it will be casted as True else False. Now that I have my two groups, high and low population states I was able to begin my analysis.
 
 ### Summary of Results
+
+The plot below shows the results of my permutation test. It displays the empirical distribution of the generated absolute differences in accuracy under the null. The red line shows the observed value. The p-value I calculated was 0.47.
 
 <iframe src="assets/emperical.html" width=800 height=600 frameBorder=0></iframe>
 
