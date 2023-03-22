@@ -1,10 +1,10 @@
 # Major Outage Cause Category Classifier
-<small> <i>This is a project for DSC 80 at UCSD by Diego Silva (d1silva@ucsd.edu). My exploratory data analysis on this dataset can be found <a href="https://dsilva019.github.io/EDA-of-Major-Outages/"> here</a>.</i> </small>
+<small> <i>By Diego Silva (d1silva@ucsd.edu). My exploratory data analysis on this dataset can be found <a href="https://dsilva019.github.io/EDA-of-Major-Outages/"> here</a>.</i> </small>
 
 
 # <u>Introduction</u>
 
-For this project I will be using a data set containing major outages reported by different states in the United States from January 2000-July 2016. This data set contains 1534 rows and 55 columns. I want to be able to predict the category cause that results in a major outage. Since I am trying to predict the category of the cause of the major outage, the type of problem I have is a classification problem. As a result, I will be predicting the category cause of future major outages using a Decision Tree Classifier (DTC). My response variable for my regression problem is the Category Cause. I will be accessing the quality of my model using the accuracy metric of the DTC to see how well my model predicts the category cause of an outage. I chose accuracy as my evaluation metric because for this type of prediction problem, the True Positives and True Negatives are more important than knowing the False Positive and Negatives.
+For this project I will be using a data set containing major outages reported by different states in the United States from January 2000-July 2016. This data set contains 1534 rows and 55 columns. I want to be able to predict the category cause that results in a major outage. Since I am trying to predict the category of the cause of the major outage, the type of problem I have is a classification problem. As a result, I will be predicting the category cause of future major outages using a Decision Tree Classifier (DTC). My response variable for my regression problem is the Category Cause. I will be accessing the quality of my model using the accuracy metric of the DTC to see how well my model predicts the category cause of an outage.  I chose accuracy as my evaluation metric because I want to see how many predictions my model got correct overall, I am not worried about the percentage of false positives or negatives of my model and for the scope of my problem precision or recall do not have much importance since there is no negative outcomes of any false positives or negatives my model might make. For the scope of my problem, the overall accuracy is more important than knowing the false predictions.
 
 
 
@@ -12,7 +12,7 @@ For this project I will be using a data set containing major outages reported by
 
 #### Data Cleaning
 
-In my data cleaning process, I first looked at the raw data set to assess what steps needed to be done. I looked for any unnecessary rows and columns, checked the column names, and anything else that looked out of the ordinary for a data set. In my specific case, I noticed there were a couple of columns and rows that were unnecessary and the column names were incorrect. So I dropped said columns and rows, set the columns to their proper respective names, and reset the index of the data frame. Lastly, I ensured the data types of the columns were the best possible type which allowed me to properly analyze the data frame.  
+In my data cleaning process, I first looked at the raw data set to assess what steps needed to be done. I looked for any unnecessary rows and columns, checked the column names, and anything else that looked out of the ordinary for a data set. In my specific case, I noticed there were a couple of columns and rows that were unnecessary and the column names were incorrect. So I dropped said columns and rows, set the columns to their proper respective names, and reset the index of the data frame. Lastly, I ensured the data types of the columns were the best possible type which allowed me to properly analyze the data frame. Lastly, I combined columns 'OUTAGE.START.DATE' and 'OUTAGE.START.TIME' into one column called 'OUTAGE.START'. And columns 'OUTAGE.RESTORATION.DATE' and 'OUTAGE.RESTORATION.TIME' into one column called 'OUTAGE.RESTORATION'.
 
 
 #### Outages DataFrame
@@ -53,7 +53,7 @@ I will be splitting my data into two sections training and testing data. Where 0
 
 ### Summary of Results
 
-My current baseline model has an accuracy of 0.605 on training data and a score of 0.536 on testing data. This tells me while my model can predict the outcome of training data not that well and on new never seen data my model performs even worse. This tells me the model is slightly overfitted with the training data and needs more features since it is only accurate 53.6% percent of the time when tested on new data.
+My current baseline model has an accuracy of 0.605 on training data and a score of 0.536 on testing data. This tells me my model can predict the outcome of training data not that well and on new never seen data my model performs even worse. This tells me the model is slightly overfitted with the training data and needs more features since it is only accurate 53.6% percent of the time when tested on new data. So I would not consider my baseline model as "good."
 
 # <u>Final model</u>
 
@@ -66,7 +66,7 @@ As previously stated to improve my baseline model I needed more features that gi
 ### Preprocessing line Additions
 <ul>
   <li> Custom Function Transformer that binarizes the 'HURRICANE.NAMES' column.</li>
-  <li> One hot encodes 'MONTH', 'U.S._STATE', 'NERC.REGION', and 'CLIMATE.REGION' columns.</li>
+  <li> One hot encodes 'U.S._STATE' and 'CLIMATE.REGION' columns.</li>
   <li> Transforms the 'POPULATION' column into quantiles.</li>
   <li> Leaves 'AREAPCT_URBAN', and 'PCT_WATER_TOT' columns as is.</li>
 </ul>
@@ -84,11 +84,11 @@ To further improve my model I decided I want to fine-tune the hyper parameters o
 In conclusion, the final model I chose was a Decision tree Classifier. The features I chose for my model were 'MONTH', 'U.S._STATE', 'NERC.REGION', 'CLIMATE.REGION', 'POPULATION', 'HURRICANE.NAMES', 'AREAPCT_URBAN', and 'PCT_WATER_TOT'. Five of those features were nominal categorical features, while three of them were numerical features. I one hot-encoded four of the nominal categorical features to turn them into numerical ones. I binarized 'HURRICANE.NAMES' using a custom function transformer I made to binarize its values. As for the numerical features I turned the 'POPULATION' feature into quantiles and left 'AREAPCT_URBAN', and 'PCT_WATER_TOT' as is. As for the hyperparameters of the Decision Tree Classifier, I ended up choosing a max depth of 36 and a minimum sample split of 5. The way I did this by manually iterating through every single combination of a max depth range of 1-200 and a minimum sample split range of 2-30. In each iteration, I fitted the model with training data and recorded its accuracy on the testing data. Then I chose the model with the greatest accuracy with the testing data.
 ### Results Breakdown
 
-As for the results, I saw significant improvement in both the training data and testing data accuracy. The accuracy of the training data was 0.7260869565217392 and for the testing data, it was 0.6328125. This tells me that the new features I included and engineered alongside the hyperparameters I fine-tuned were able to better optimize generalization performance. My model became more generalized allowing for better predictions of the category cause of major outages on both the training and unseen data. My last model was too specific as it only had access to two features that relate mostly to the severe weather causes but not the other causes.
+As for the results, I saw significant improvement in both the training data and testing data accuracy. The accuracy of the training data was 0.677 and for the testing data, it was 0.586. This tells me that the new features I included and engineered alongside the hyperparameters I fine-tuned were able to better optimize generalization performance. My model became more generalized allowing for better predictions of the category cause of major outages on both the training and unseen data. My last model was too specific as it only had access to two features that relate mostly to the severe weather causes but not the other causes.
 
 # <u> Fairness analysis</u>
 
-To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3. I will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis. Lastly, to conduct my fairness analysis I will use a permutation test to test my hypotheses.
+To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. I first created a new column with the quantiles of the population for each row. I then defined Low-population states are states with a Population quantile of three or lower, and high populations are states with Population Quantiles greater than 3. I will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis. Lastly, to conduct my fairness analysis I will use a permutation test to test my hypotheses.
 
 
 ### Hypotheses:
@@ -97,15 +97,15 @@ To access the fairness of my final model, I want to see whether my model is fair
 
 <b>Alternative Hypothesis: </b>There is a difference in accuracy for low population states and high population states
 
-<b>Observed Absolute Difference in Accuracy: </b>0.03581703572005823
+<b>Observed Absolute Difference in Accuracy: </b>0.0126
 
 ### Set Up
 To begin my fairness analysis, I first need to create a new column that contains the Population Quantiles of the state that the major outages occurred in. Once I had that, I then turned the column into a Boolean column, on the conditions if a row had a value of 3 or lower it will be casted as True else False. Now that I have my two groups, high and low population states I was able to begin my analysis.
 
 ### Summary of Results
 
-The plot below shows the results of my permutation test. It displays the empirical distribution of the generated absolute differences in accuracy under the null. The red line shows the observed value. The p-value I calculated was 0.47.
+The plot below shows the results of my permutation test. It displays the empirical distribution of the generated absolute differences in accuracy under the null. The red line shows the observed value. The p-value I calculated was 0.80.
 
 <iframe src="assets/emperical.html" width=800 height=600 frameBorder=0></iframe>
 
-Since the p-value is greater than the significance level, 0.47 > 0.05, we fail to reject the null hypothesis. There is not enough evidence to suggest that there is a difference in accuracy between low and high population states.
+Since the p-value is greater than the significance level, 0.80 > 0.05, we fail to reject the null hypothesis. There is not enough evidence to suggest that there is a difference in accuracy between low and high population states.
