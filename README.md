@@ -97,7 +97,7 @@ To access the fairness of my final model, I want to see whether my model is fair
 
 <b>Alternative Hypothesis: </b>There is a difference in accuracy for low population states and high population states.
 
-<b>Observed Absolute Difference in Accuracy: </b>0.0461
+<b>Observed Absolute Difference in Accuracy: </b>0.0411
 
 ### Set Up
 To begin my fairness analysis, I first need to create a new column that contains the Population Quantiles of the state that the major outages occurred in. Once I had that, I then turned the column into a Boolean column, on the condition if a row had a value of 3 or lower it will be cast as True else False. Now that I have my two groups, high and low population states I was able to begin my analysis.
