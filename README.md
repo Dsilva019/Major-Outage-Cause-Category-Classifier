@@ -63,7 +63,7 @@ As previously mentioned to improve my baseline model I needed more features that
 
 
 
-### Preprocessing line Additions
+### Preprocessing Line Additions
 <ul>
   <li> Custom Function Transformer that binarizes the 'HURRICANE.NAMES' column.</li>
   <li> One hot encodes 'U.S._STATE' and 'CLIMATE.REGION' columns.</li>
@@ -77,7 +77,7 @@ As previously mentioned to improve my baseline model I needed more features that
 ### Decision Tree Classifier Hyperparameter Fine Tuner
 
 To further improve my model I decided I want to fine-tune the hyperparameters of the Decision Tree Classifier. Those being the max depth and the minimum sample split. The reason why I chose to tune the max depth is that I want to make my tree more expressive since there are multiple cause categories I want my tree to be a bit more complex. Secondly, the reason why I chose to fine-tune the minimum sample split of the tree is that it is not guaranteed that my tree will be built symmetrically. As a result, I want to optimize generalization performance by increasing the number of minimum sample splits. This allows some branches to grow deeper than others producing more tree splits to better classify the samples.
-## Summary of Final Model and results
+## Summary of Final Model and Results
 
 ### Final Model Breakdown
 
@@ -86,7 +86,7 @@ In conclusion, the final model I chose was a Decision tree Classifier. The featu
 
 As for the results, I saw significant improvement in both the training data and testing data accuracy. The accuracy of the training data was 0.804 and for the testing data, it was 0.589. This tells me that the new features I included and engineered alongside the hyperparameters I fine-tuned were able to better optimize generalization performance. My model became more generalized allowing for better predictions of the category cause of major outages on both the training and unseen data. My last model was too specific as it only had access to two features that relate mostly to the severe weather causes but not the other causes. But my final model was able to become more generalized as it had more features to make better predictions since they gave more insight into both the weather conditions and also demographics of the population affected by the outage.
 
-# <u> Fairness analysis</u>
+# <u> Fairness Analysis</u>
 
 To access the fairness of my final model, I want to see whether my model is fair when predicting the cause category of major outages between low and high-population states. I will continue to use accuracy as my evaluation metric to conduct my fairness analysis. Since there is no exact definition of low and high-population states I define my definitions here. I first created a new column with the quantiles of the population for each row. I then defined Low-population states as states with a Population quantile of three or lower, and High Population states as states with Population Quantiles greater than 3. I will be using the absolute difference in accuracy as my test statistic. Additionally, I will choose a significance level of 0.05 as a cut-off for my p-value since a p-value smaller than 0.05 indicates strong evidence against my null hypothesis. Lastly, to conduct my fairness analysis I will use a permutation test to test my hypotheses.
 
@@ -104,8 +104,8 @@ To begin my fairness analysis, I first need to create a new column that contains
 
 ### Summary of Results
 
-The plot below shows the results of my permutation test. It displays the empirical distribution of the generated absolute differences in accuracy under the null. The red line shows the observed value. The p-value I calculated was 0.47.
+The plot below shows the results of my permutation test. It displays the empirical distribution of the generated absolute differences in accuracy under the null. The red line shows the observed value. The p-value I calculated was 0.46.
 
 <iframe src="assets/emperical.html" width=800 height=600 frameBorder=0></iframe>
 
-Since the p-value is greater than the significance level, 0.47 > 0.05, we fail to reject the null hypothesis. There is not enough evidence to suggest that there may be a difference in accuracy between low and high-population states.
+Since the p-value is greater than the significance level, 0.46 > 0.05, we fail to reject the null hypothesis. There is not enough evidence to suggest that there may be a difference in accuracy between low and high-population states.
